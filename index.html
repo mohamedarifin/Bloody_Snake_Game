@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            width: 100vw;
+            background:rgb(243, 201, 125);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            width: 300px;
+            min-height: 330px;
+            position: relative;
+        }
+        .score{
+            background:#52391b;
+            width: 100%;
+            height: 30px;
+            display: flex;
+            justify-content: end;           
+            align-items: center;
+            color: #dc9a49;
+            padding-right: 20px;
+            font-size: 20px;
+            font-family:serif;
+            font-weight:900;
+        }
+        .board{
+            width: 300px;
+            height: 300px;
+            position:relative;
+        }
+        .title{
+            font-size: 15px;
+            font-weight: 900;
+            margin-right: 100px;
+            color: #dc9a49;
+        }
+        .gameover_display{
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            width: 300px;
+            height: 300px;
+            background: #dc9a55;
+            transform: scale(0);
+            transition: 1s;
+            font-size: 20px;
+            font-family:monospace;
+            font-weight:900;
+        }
+        .game_over{
+            color: #52391b;
+            font-size: 25px;
+            text-align: center;
+            margin-top: 100px;
+            text-shadow:0px 0px 3px #52391b;
+        }
+        .score_display{
+            color: #52391b;
+            font-size: 20px;
+           text-align: center;
+           margin-top: 10px;
+            text-shadow:0px 0px 4px #52391b;
+        }
+        .btngrp{
+           
+            width: 300px;
+            height: 100px;
+            background:#725026;
+            font-size: 20px;
+            font-weight: 900;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px;
+            gap: 10px;
+            margin-top: 20px;
+            border-radius: 10px;
+            
+            transform: scale(0);
+            transition: 1s;
+        }
+        .btnt{
+            width: 100px;
+            background: #dc9a49;
+            margin-left:100px;
+            margin-right: 100px;
+            border-radius: 10px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+        .btnl,.btnb,.btnr{
+            width: 90px;
+            background: #dc9a49;
+            border-radius: 10px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+        .btngrp div:hover{
+            transform: scale(1.05);
+        }
+        .btngrp div:active{
+            transform: scale(0.95);
+        }
+        .start_game{
+            height: 330px;
+            width: 300px;
+            background: #dc9a55;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 101;
+            border:4px solid #725026;
+            transform: scale(1);
+            transition:1s;
+            
+            
+        }
+        .en_title{
+            color: #52391b;
+            font-size: 25px;
+            text-align: center;
+            margin-top: 100px;
+            text-shadow:0px 0px 3px #52391b;
+        }
+        .start{
+            color:#dc9a55;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 20px;
+            text-shadow:0px 0px 4px #52391b;
+            background:#52391b ;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 10px;
+            font-weight: 900;
+            margin-left: 105px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        .start:hover{
+            transform: scale(1.05);
+        }
+        .start:active{
+            transform: scale(0.95);
+        }
+        .game_level{
+            height: 330px;
+            width: 300px;
+            background: #dc9a55;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            border:4px solid #725026;
+            transform: scale(1);
+            transition:1s;
+        }
+        /* .game_level .en_title{
+            color: #52391b;
+            font-size: 25px;
+            text-align: center;
+            margin-top: 100px;
+            text-shadow:0px 0px 3px #52391b;
+        } */
+        .easy,.medium,.hard{
+            color:#dc9a55;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 10px;
+            text-shadow:0px 0px 4px #52391b;
+            background:#52391b ;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 10px;
+            font-weight: 900;
+            margin-left: 105px;
+            cursor: pointer;
+            /* padding: 10px; */
+        }
+        .easy:hover,.medium:hover,.hard:hover{
+            transform: scale(1.05);
+        }
+        .easy:active,.medium:active,.hard:active{
+            transform: scale(0.95);
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="start_game">
+            <div class="en_title">Bloody🐍 Snake</div>
+            <div class="start">Start</div>
+        </div>
+        <div class="game_level">
+            <div class="en_title">Bloody🐍 Snake</div>
+            <div class="easy">Easy</div>
+            <div class="medium">Medium</div>
+            <div class="hard">Hard</div>
+        </div>
+        <div class="score">
+            <div class="title">Bloody🐍 Snake</div>
+            <div class="h4">score:</div>
+            <div class="point">0</div>
+        </div>
+        <div class="board">
+            <canvas class="snakeboard" width="300px" height="300px"></canvas>
+            <div class="gameover_display">
+                <div class="game_over">✨Game Over✨</div>
+                <div class="score_display">High Score:<span>0</span></div>
+            </div>
+        </div>
+        <div class="btngrp">
+            <div data-key="ArrowUp" class="btnt">⇈</div>
+            <div data-key="ArrowLeft" class="btnl">⇇</div>
+            <div data-key="ArrowDown" class="btnb">⇊</div>
+            <div data-key="ArrowRight" class="btnr">⇉</div>
+        </div>
+        
+    </div>
+    <script>
+        let snakeboard = document.querySelector(".snakeboard");
+        let point = document.querySelector(".point");
+        let scroress = point.innerHTML;
+        let gameover_display = document.querySelector(".gameover_display");
+        let score_display = document.querySelector(".score_display span");
+        // get buttons ....
+        // let btnl = document.querySelector(".btnl");
+        // let btnr = document.querySelector(".btnr");
+        // let btnt = document.querySelector(".btnt");
+        // let btnb = document.querySelector(".btnb");
+        let btngrp = document.querySelectorAll(".btngrp div");
+        let btngroup = document.querySelector(".btngrp")
+       
+        
+
+        // ..............
+        let board = snakeboard.getContext('2d');
+        let bwidth = snakeboard.width;
+        let bheight = snakeboard.height;
+        
+        let unit =bwidth/20;
+        
+        let foodx,foody;
+        let velocityX = 0;
+        let velocityY = unit;
+        let snakes =[{x:0,y:0}];
+
+        let start_stage = 100000;
+
+        snake()
+        function snake(){
+            board.fillStyle = "#725026";
+            board.fillRect(0,0,bwidth,bheight);
+            snakefooddisplay();
+            snakefoodcreate();
+            createsnake();
+            movesnake();
+        }
+        
+        function snakefooddisplay(){
+            foodx = Math.floor(Math.random()*bwidth/unit)*unit;
+            foody = Math.floor(Math.random()*bheight/unit)*unit;
+        }
+        function snakefoodcreate(){
+            board.fillStyle ="#dc9a49";
+            board.fillRect(foodx,foody,unit,unit);
+            board.strokeStyle ="#dc9a49";
+            board.strokeRect(foodx,foody,unit,unit);
+            board.strokeStyle ="#dc9a49";
+            board.strokeRect(foodx,foody,unit,unit);
+            
+        }
+        function createsnake(){
+            snakes.forEach(snake=>{
+                board.fillStyle ="#725026";
+                board.fillRect(snake.x,snake.y,unit,unit);
+                board.strokeStyle ="#dc9a49";
+                board.strokeRect(snake.x,snake.y,unit,unit);
+                board.strokeStyle ="#dc9a49";
+                board.strokeRect(snake.x,snake.y,unit,unit);
+                board.strokeStyle ="#dc9a49";
+                board.strokeRect(snake.x,snake.y,unit,unit); 
+            })
+        }
+        function movesnake(){
+            board.fillStyle = "#725026";
+            board.fillRect(0,0,bwidth,bheight);
+            let head ={x:snakes[0].x + velocityX,y:snakes[0].y + velocityY};
+            snakes.unshift(head);
+            
+            snakefoodcreate();
+            createsnake();
+            if(head.x == foodx && head.y == foody){
+                snake();   
+                
+                let final_score = point.innerHTML=1+scroress++;
+                score_display.innerHTML = final_score;
+            }
+            else{
+                snakes.pop();
+            }
+            if(head.x>=bwidth || head.y>=bheight){
+                gameover_display.style.transition = "1s";
+                gameover_display.style.transform = " scale(0.98)";
+            }
+            if(head.x<0 || head.y<0){
+                gameover_display.style.transition = "1s";
+                gameover_display.style.transform = " scale(0.98)";
+            }
+            // snakes.forEach(snak=>{
+            //     if(head.x == snak.x || head.y == snak.y){
+            //         gameover_display.style.transition = "1s";
+            //         gameover_display.style.transform = " scale(1)";
+            //     }
+            // })
+            
+        }
+        
+        // for key board device only ................
+        window.addEventListener("keydown",(e)=>{
+            if(e.code == "ArrowUp" && velocityY!=unit){
+               
+                velocityX = 0;
+                velocityY = -unit;
+            }
+            else if(e.code == "ArrowDown" && velocityY!=-unit){
+              
+                velocityX = 0;
+                velocityY = unit;
+            }
+            else if(e.code == "ArrowRight" && velocityX!=-unit){
+                
+                velocityX = unit;
+                velocityY = 0;
+            }
+            else if(e.code == "ArrowLeft" && velocityX!=unit){
+                console.log(e.code);
+                velocityX = -unit;
+                velocityY = 0;
+            }
+        })
+        // for mobile ...............
+        btngrp.forEach(btn=>{
+            // console.log(btn.attributes[0]=="ArrowUp")
+            btn.addEventListener("click",(e)=>{
+                if(btn.attributes[0].value == "ArrowUp" && velocityY!=unit){
+                    velocityX = 0;
+                    velocityY = -unit;
+                }
+                else if(btn.attributes[0].value == "ArrowDown" && velocityY!=-unit){
+                    
+                    velocityX = 0;
+                    velocityY = unit;
+            }
+                else if(btn.attributes[0].value == "ArrowRight" && velocityX!=-unit){
+                    
+                    velocityX = unit;
+                    velocityY = 0;
+            }
+                else if(btn.attributes[0].value == "ArrowLeft" && velocityX!=unit){
+                    
+                    velocityX = -unit;
+                    velocityY = 0;
+            }
+                
+            })
+        })
+        let start = document.querySelector(".start");
+        let start_game_dis = document.querySelector(".start_game");
+        start.addEventListener("click",(e)=>{
+            e.preventDefault();
+            start_game_dis.style.transform = "scale(0)";
+            start_game_dis.style.transition = "0s";
+            start_stage = 100000;
+            setInterval(movesnake,start_stage)
+        })
+        let easy = document.querySelector(".easy");
+        let medium = document.querySelector(".medium");
+        let hard = document.querySelector(".hard");
+        let game_level = document.querySelector(".game_level");
+
+
+       
+        // game_level
+        easy.addEventListener("click",(e)=>{
+            e.preventDefault();
+            
+            game_level.style.transform = "scale(0)";
+            game_level.style.transition = " .5s";
+            start_stage = 300;
+            setInterval(movesnake,start_stage);
+            btngroup.style.transform = "scale(1)";
+            btngroup.style.transition = ".7s";
+        })
+        
+        
+        
+        medium.addEventListener("click",(e)=>{
+            e.preventDefault();
+           game_level.style.transform = "scale(0)";
+            game_level.style.transition = ".5s";
+            start_stage = 250;
+            setInterval(movesnake,start_stage);
+            btngroup.style.transform = "scale(1)";
+            btngroup.style.transition = ".7s";
+        })
+        hard.addEventListener("click",(e)=>{
+            e.preventDefault();
+            game_level.style.transform = "scale(0)";
+            game_level.style.transition = ".5s";
+            start_stage = 100;
+            setInterval(movesnake,start_stage);
+            btngroup.style.transform = "scale(1)";
+            btngroup.style.transition = ".7s";
+            
+        })
+
+
+        
+        
+
+    </script>
+</body>
+</html>
